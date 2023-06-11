@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package mafia;
+
+service MyMafiaEvents {
+  rpc GameEvents(GameEventsRequest) returns(stream GameEventsResponse) {}
+  rpc ShowUsersInRoom(ShowUsersInRoomRequest) returns(ShowUsersInRoomResponse) {}
+  rpc UpdateTimeInfo(UpdateTimeInfoRequest) returns(UpdateTimeInfoResponse) {}
+  rpc CreateRoom(CreateRoomRequest) returns(CreateRoomResponse) {}
+  rpc JoinRoom(JoinRoomRequest) returns(JoinRoomResponse) {}
+  rpc Eliminated(EliminatedRequest) returns(EliminatedResponse) {}
+  rpc ShowRole(ShowRoleRequest) returns(ShowRoleResponse) {}
+  rpc OfficerStatement(OfficerStatementRequest) returns(OfficerStatementResponse) {}
+}
+
+
+message ShowUsersInRoomRequest {
+  string session_name = 1;
+  string username = 2;
+}
+
+message ShowUsersInRoomResponse {
+  map<string, string> user_list = 1;
+}
+
+message CreateRoomRequest {
+  string username = 1;
+  string session_name = 3;
+  int32  game_size = 2;
+}
+
+message CreateRoomResponse {
+  bool status = 1;
+  string info = 2;
+}
+
+message JoinRoomRequest {
+  string username = 1;
+  string session_name = 2;
+}
+
+message JoinRoomResponse {
+  bool status = 1;
+  string info = 2;
+  string role = 3;
+  map<string, string> users = 4;
+}
+
+message UpdateTimeInfoRequest {
+  string username = 1;
+  string session_name = 2;
+}
+
+message UpdateTimeInfoResponse {
+  string role = 1;
+  bool is_end_game = 2;
+  string end_game_message = 3;
+  map<string, string> users = 4;
+}
+
+message ShowRoleRequest {
+  string username = 1;
+  string session_name = 2;
+  string suspect = 3;
+}
+
+message ShowRoleResponse {
+  string role = 1;
+}
+
+message GameEventsRequest {
+  string username = 1;
+  string session_name = 2;
+}
+
+message GameEventsResponse {
+  int32 format = 1;
+  string text = 2;
+}
+
+message EliminatedRequest {
+  string username = 1;
+  string session_name = 2;
+  string corpse_name = 3;
+}
+
+message EliminatedResponse {
+  bool status = 1;
+  string info = 2;
+}
+
+message OfficerStatementRequest {
+  string username = 1;
+  string session_name = 2;
+}
+
+message OfficerStatementResponse {
+  bool status = 1;
+  string info = 2;
+}
+

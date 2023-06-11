@@ -1,0 +1,2 @@
+pick~=2.2.0
+grpcio-tools ~= 1.30
