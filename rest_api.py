@@ -4,9 +4,20 @@ import grpc
 import proto.struct_pb2 as pb2
 import proto.struct_pb2_grpc as pb2_grpc
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
+from flask_restful import Resource, Api
+from rq import Queue
+from rq.job import Job
+from redis import Redis
+from rq.registry import StartedJobRegistry
+import pdfkit
 
 app = Flask(__name__)
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+app.config['UPLOAD_FOLDER'] = 'uploads'
+api = Api(app)
+redis_conn = Redis()
+queue = Queue(connection=redis_conn)
 
 channel = grpc.insecure_channel("0.0.0.0:8080")
 stub = pb2_grpc.MyMafiaEventsStub(channel)
@@ -31,7 +42,7 @@ def user_profile(username):
         return "No such user!"
     user = response.user_info
     user["username"] = username
-    print(user)
+    user['path'] = "../static/" + user["path"]
     if not user:
         return 'Пользователь не найден'
     return render_template('profile.html', user=user)
@@ -55,7 +66,7 @@ def edit_user(username):
         # Обработка загрузки нового аватара
         if 'avatar' in request.files:
             avatar = request.files['avatar']
-            avatar.save(f'uploads/avatar{username}.jpg')
+            avatar.save(f'static/avatar{username}.jpg')
             user['avatar'] = f'avatar{username}.jpg'
 
         response = stub.EditUser(
