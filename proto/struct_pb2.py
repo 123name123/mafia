@@ -6,62 +6,88 @@ from google.protobuf.internal import builder as _builder
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import symbol_database as _symbol_database
-
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
-    b'\n\x0cstruct.proto\x12\x05mafia\";\n\x11GameEventsRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\"2\n\x12GameEventsResponse\x12\x0e\n\x06\x66ormat\x18\x01 \x01(\x05\x12\x0c\n\x04text\x18\x02 \x01(\t\"@\n\x16ShowUsersInRoomRequest\x12\x14\n\x0csession_name\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\"\x8b\x01\n\x17ShowUsersInRoomResponse\x12?\n\tuser_list\x18\x01 \x03(\x0b\x32,.mafia.ShowUsersInRoomResponse.UserListEntry\x1a/\n\rUserListEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"N\n\x11\x43reateRoomRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x03 \x01(\t\x12\x11\n\tgame_size\x18\x02 \x01(\x05\"2\n\x12\x43reateRoomResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0c\n\x04info\x18\x02 \x01(\t\"9\n\x0fJoinRoomRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\"\x9f\x01\n\x10JoinRoomResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0c\n\x04info\x18\x02 \x01(\t\x12\x0c\n\x04role\x18\x03 \x01(\t\x12\x31\n\x05users\x18\x04 \x03(\x0b\x32\".mafia.JoinRoomResponse.UsersEntry\x1a,\n\nUsersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"?\n\x15UpdateTimeInfoRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\"\xbc\x01\n\x16UpdateTimeInfoResponse\x12\x0c\n\x04role\x18\x01 \x01(\t\x12\x13\n\x0bis_end_game\x18\x02 \x01(\x08\x12\x18\n\x10\x65nd_game_message\x18\x03 \x01(\t\x12\x37\n\x05users\x18\x04 \x03(\x0b\x32(.mafia.UpdateTimeInfoResponse.UsersEntry\x1a,\n\nUsersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"J\n\x0fShowRoleRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\x12\x0f\n\x07suspect\x18\x03 \x01(\t\" \n\x10ShowRoleResponse\x12\x0c\n\x04role\x18\x01 \x01(\t\"P\n\x11\x45liminatedRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\x12\x13\n\x0b\x63orpse_name\x18\x03 \x01(\t\"2\n\x12\x45liminatedResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0c\n\x04info\x18\x02 \x01(\t\"A\n\x17OfficerStatementRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\"8\n\x18OfficerStatementResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0c\n\x04info\x18\x02 \x01(\t2\xda\x04\n\rMyMafiaEvents\x12\x45\n\nGameEvents\x12\x18.mafia.GameEventsRequest\x1a\x19.mafia.GameEventsResponse\"\x00\x30\x01\x12R\n\x0fShowUsersInRoom\x12\x1d.mafia.ShowUsersInRoomRequest\x1a\x1e.mafia.ShowUsersInRoomResponse\"\x00\x12O\n\x0eUpdateTimeInfo\x12\x1c.mafia.UpdateTimeInfoRequest\x1a\x1d.mafia.UpdateTimeInfoResponse\"\x00\x12\x43\n\nCreateRoom\x12\x18.mafia.CreateRoomRequest\x1a\x19.mafia.CreateRoomResponse\"\x00\x12=\n\x08JoinRoom\x12\x16.mafia.JoinRoomRequest\x1a\x17.mafia.JoinRoomResponse\"\x00\x12\x43\n\nEliminated\x12\x18.mafia.EliminatedRequest\x1a\x19.mafia.EliminatedResponse\"\x00\x12=\n\x08ShowRole\x12\x16.mafia.ShowRoleRequest\x1a\x17.mafia.ShowRoleResponse\"\x00\x12U\n\x10OfficerStatement\x12\x1e.mafia.OfficerStatementRequest\x1a\x1f.mafia.OfficerStatementResponse\"\x00\x62\x06proto3')
+
+
+
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cstruct.proto\x12\x05mafia\"\"\n\x0e\x41\x64\x64UserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"/\n\x0f\x41\x64\x64UserResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0c\n\x04text\x18\x02 \x01(\t\"V\n\x0f\x45\x64itUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x12\n\nimage_path\x18\x02 \x01(\t\x12\x0e\n\x06gender\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\"0\n\x10\x45\x64itUserResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0c\n\x04text\x18\x02 \x01(\t\"\x15\n\x13GetUsersInfoRequest\"\x85\x01\n\x14GetUsersInfoResponse\x12<\n\tuser_list\x18\x01 \x03(\x0b\x32).mafia.GetUsersInfoResponse.UserListEntry\x1a/\n\rUserListEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"&\n\x12GetUserInfoRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"\x93\x01\n\x13GetUserInfoResponse\x12\x0e\n\x06status\x18\x01 \x01(\x05\x12;\n\tuser_info\x18\x02 \x03(\x0b\x32(.mafia.GetUserInfoResponse.UserInfoEntry\x1a/\n\rUserInfoEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"@\n\x16ShowUsersInRoomRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\"\x8b\x01\n\x17ShowUsersInRoomResponse\x12?\n\tuser_list\x18\x01 \x03(\x0b\x32,.mafia.ShowUsersInRoomResponse.UserListEntry\x1a/\n\rUserListEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"N\n\x11\x43reateRoomRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x03 \x01(\t\x12\x11\n\tgame_size\x18\x02 \x01(\x05\"2\n\x12\x43reateRoomResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0c\n\x04info\x18\x02 \x01(\t\"9\n\x0fJoinRoomRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\"\x9f\x01\n\x10JoinRoomResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0c\n\x04info\x18\x02 \x01(\t\x12\x0c\n\x04role\x18\x03 \x01(\t\x12\x31\n\x05users\x18\x04 \x03(\x0b\x32\".mafia.JoinRoomResponse.UsersEntry\x1a,\n\nUsersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"?\n\x15UpdateTimeInfoRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\"\xbc\x01\n\x16UpdateTimeInfoResponse\x12\x0c\n\x04role\x18\x01 \x01(\t\x12\x13\n\x0bis_end_game\x18\x02 \x01(\x08\x12\x18\n\x10\x65nd_game_message\x18\x03 \x01(\t\x12\x37\n\x05users\x18\x04 \x03(\x0b\x32(.mafia.UpdateTimeInfoResponse.UsersEntry\x1a,\n\nUsersEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"J\n\x0fShowRoleRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\x12\x0f\n\x07suspect\x18\x03 \x01(\t\" \n\x10ShowRoleResponse\x12\x0c\n\x04role\x18\x01 \x01(\t\";\n\x11GameEventsRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\"2\n\x12GameEventsResponse\x12\x0e\n\x06\x66ormat\x18\x01 \x01(\x05\x12\x0c\n\x04text\x18\x02 \x01(\t\"P\n\x11\x45liminatedRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\x12\x13\n\x0b\x63orpse_name\x18\x03 \x01(\t\"2\n\x12\x45liminatedResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0c\n\x04info\x18\x02 \x01(\t\"A\n\x17OfficerStatementRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x14\n\x0csession_name\x18\x02 \x01(\t\"8\n\x18OfficerStatementResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\x0c\n\x04info\x18\x02 \x01(\t2\xe8\x06\n\rMyMafiaEvents\x12\x45\n\nGameEvents\x12\x18.mafia.GameEventsRequest\x1a\x19.mafia.GameEventsResponse\"\x00\x30\x01\x12R\n\x0fShowUsersInRoom\x12\x1d.mafia.ShowUsersInRoomRequest\x1a\x1e.mafia.ShowUsersInRoomResponse\"\x00\x12O\n\x0eUpdateTimeInfo\x12\x1c.mafia.UpdateTimeInfoRequest\x1a\x1d.mafia.UpdateTimeInfoResponse\"\x00\x12\x43\n\nCreateRoom\x12\x18.mafia.CreateRoomRequest\x1a\x19.mafia.CreateRoomResponse\"\x00\x12=\n\x08JoinRoom\x12\x16.mafia.JoinRoomRequest\x1a\x17.mafia.JoinRoomResponse\"\x00\x12\x43\n\nEliminated\x12\x18.mafia.EliminatedRequest\x1a\x19.mafia.EliminatedResponse\"\x00\x12=\n\x08ShowRole\x12\x16.mafia.ShowRoleRequest\x1a\x17.mafia.ShowRoleResponse\"\x00\x12U\n\x10OfficerStatement\x12\x1e.mafia.OfficerStatementRequest\x1a\x1f.mafia.OfficerStatementResponse\"\x00\x12I\n\x0cGetUsersInfo\x12\x1a.mafia.GetUsersInfoRequest\x1a\x1b.mafia.GetUsersInfoResponse\"\x00\x12\x46\n\x0bGetUserInfo\x12\x19.mafia.GetUserInfoRequest\x1a\x1a.mafia.GetUserInfoResponse\"\x00\x12:\n\x07\x41\x64\x64User\x12\x15.mafia.AddUserRequest\x1a\x16.mafia.AddUserResponse\"\x00\x12=\n\x08\x45\x64itUser\x12\x16.mafia.EditUserRequest\x1a\x17.mafia.EditUserResponse\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'struct_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
-    DESCRIPTOR._options = None
-    _SHOWUSERSINROOMRESPONSE_USERLISTENTRY._options = None
-    _SHOWUSERSINROOMRESPONSE_USERLISTENTRY._serialized_options = b'8\001'
-    _JOINROOMRESPONSE_USERSENTRY._options = None
-    _JOINROOMRESPONSE_USERSENTRY._serialized_options = b'8\001'
-    _UPDATETIMEINFORESPONSE_USERSENTRY._options = None
-    _UPDATETIMEINFORESPONSE_USERSENTRY._serialized_options = b'8\001'
-    _GAMEEVENTSREQUEST._serialized_start = 23
-    _GAMEEVENTSREQUEST._serialized_end = 82
-    _GAMEEVENTSRESPONSE._serialized_start = 84
-    _GAMEEVENTSRESPONSE._serialized_end = 134
-    _SHOWUSERSINROOMREQUEST._serialized_start = 136
-    _SHOWUSERSINROOMREQUEST._serialized_end = 200
-    _SHOWUSERSINROOMRESPONSE._serialized_start = 203
-    _SHOWUSERSINROOMRESPONSE._serialized_end = 342
-    _SHOWUSERSINROOMRESPONSE_USERLISTENTRY._serialized_start = 295
-    _SHOWUSERSINROOMRESPONSE_USERLISTENTRY._serialized_end = 342
-    _CREATEROOMREQUEST._serialized_start = 344
-    _CREATEROOMREQUEST._serialized_end = 422
-    _CREATEROOMRESPONSE._serialized_start = 424
-    _CREATEROOMRESPONSE._serialized_end = 474
-    _JOINROOMREQUEST._serialized_start = 476
-    _JOINROOMREQUEST._serialized_end = 533
-    _JOINROOMRESPONSE._serialized_start = 536
-    _JOINROOMRESPONSE._serialized_end = 695
-    _JOINROOMRESPONSE_USERSENTRY._serialized_start = 651
-    _JOINROOMRESPONSE_USERSENTRY._serialized_end = 695
-    _UPDATETIMEINFOREQUEST._serialized_start = 697
-    _UPDATETIMEINFOREQUEST._serialized_end = 760
-    _UPDATETIMEINFORESPONSE._serialized_start = 763
-    _UPDATETIMEINFORESPONSE._serialized_end = 951
-    _UPDATETIMEINFORESPONSE_USERSENTRY._serialized_start = 651
-    _UPDATETIMEINFORESPONSE_USERSENTRY._serialized_end = 695
-    _SHOWROLEREQUEST._serialized_start = 953
-    _SHOWROLEREQUEST._serialized_end = 1027
-    _SHOWROLERESPONSE._serialized_start = 1029
-    _SHOWROLERESPONSE._serialized_end = 1061
-    _ELIMINATEDREQUEST._serialized_start = 1063
-    _ELIMINATEDREQUEST._serialized_end = 1143
-    _ELIMINATEDRESPONSE._serialized_start = 1145
-    _ELIMINATEDRESPONSE._serialized_end = 1195
-    _OFFICERSTATEMENTREQUEST._serialized_start = 1197
-    _OFFICERSTATEMENTREQUEST._serialized_end = 1262
-    _OFFICERSTATEMENTRESPONSE._serialized_start = 1264
-    _OFFICERSTATEMENTRESPONSE._serialized_end = 1320
-    _MYMAFIAEVENTS._serialized_start = 1323
-    _MYMAFIAEVENTS._serialized_end = 1925
+
+  DESCRIPTOR._options = None
+  _GETUSERSINFORESPONSE_USERLISTENTRY._options = None
+  _GETUSERSINFORESPONSE_USERLISTENTRY._serialized_options = b'8\001'
+  _GETUSERINFORESPONSE_USERINFOENTRY._options = None
+  _GETUSERINFORESPONSE_USERINFOENTRY._serialized_options = b'8\001'
+  _SHOWUSERSINROOMRESPONSE_USERLISTENTRY._options = None
+  _SHOWUSERSINROOMRESPONSE_USERLISTENTRY._serialized_options = b'8\001'
+  _JOINROOMRESPONSE_USERSENTRY._options = None
+  _JOINROOMRESPONSE_USERSENTRY._serialized_options = b'8\001'
+  _UPDATETIMEINFORESPONSE_USERSENTRY._options = None
+  _UPDATETIMEINFORESPONSE_USERSENTRY._serialized_options = b'8\001'
+  _ADDUSERREQUEST._serialized_start=23
+  _ADDUSERREQUEST._serialized_end=57
+  _ADDUSERRESPONSE._serialized_start=59
+  _ADDUSERRESPONSE._serialized_end=106
+  _EDITUSERREQUEST._serialized_start=108
+  _EDITUSERREQUEST._serialized_end=194
+  _EDITUSERRESPONSE._serialized_start=196
+  _EDITUSERRESPONSE._serialized_end=244
+  _GETUSERSINFOREQUEST._serialized_start=246
+  _GETUSERSINFOREQUEST._serialized_end=267
+  _GETUSERSINFORESPONSE._serialized_start=270
+  _GETUSERSINFORESPONSE._serialized_end=403
+  _GETUSERSINFORESPONSE_USERLISTENTRY._serialized_start=356
+  _GETUSERSINFORESPONSE_USERLISTENTRY._serialized_end=403
+  _GETUSERINFOREQUEST._serialized_start=405
+  _GETUSERINFOREQUEST._serialized_end=443
+  _GETUSERINFORESPONSE._serialized_start=446
+  _GETUSERINFORESPONSE._serialized_end=593
+  _GETUSERINFORESPONSE_USERINFOENTRY._serialized_start=546
+  _GETUSERINFORESPONSE_USERINFOENTRY._serialized_end=593
+  _SHOWUSERSINROOMREQUEST._serialized_start=595
+  _SHOWUSERSINROOMREQUEST._serialized_end=659
+  _SHOWUSERSINROOMRESPONSE._serialized_start=662
+  _SHOWUSERSINROOMRESPONSE._serialized_end=801
+  _SHOWUSERSINROOMRESPONSE_USERLISTENTRY._serialized_start=754
+  _SHOWUSERSINROOMRESPONSE_USERLISTENTRY._serialized_end=801
+  _CREATEROOMREQUEST._serialized_start=803
+  _CREATEROOMREQUEST._serialized_end=881
+  _CREATEROOMRESPONSE._serialized_start=883
+  _CREATEROOMRESPONSE._serialized_end=933
+  _JOINROOMREQUEST._serialized_start=935
+  _JOINROOMREQUEST._serialized_end=992
+  _JOINROOMRESPONSE._serialized_start=995
+  _JOINROOMRESPONSE._serialized_end=1154
+  _JOINROOMRESPONSE_USERSENTRY._serialized_start=1110
+  _JOINROOMRESPONSE_USERSENTRY._serialized_end=1154
+  _UPDATETIMEINFOREQUEST._serialized_start=1156
+  _UPDATETIMEINFOREQUEST._serialized_end=1219
+  _UPDATETIMEINFORESPONSE._serialized_start=1222
+  _UPDATETIMEINFORESPONSE._serialized_end=1410
+  _UPDATETIMEINFORESPONSE_USERSENTRY._serialized_start=1110
+  _UPDATETIMEINFORESPONSE_USERSENTRY._serialized_end=1154
+  _SHOWROLEREQUEST._serialized_start=1412
+  _SHOWROLEREQUEST._serialized_end=1486
+  _SHOWROLERESPONSE._serialized_start=1488
+  _SHOWROLERESPONSE._serialized_end=1520
+  _GAMEEVENTSREQUEST._serialized_start=1522
+  _GAMEEVENTSREQUEST._serialized_end=1581
+  _GAMEEVENTSRESPONSE._serialized_start=1583
+  _GAMEEVENTSRESPONSE._serialized_end=1633
+  _ELIMINATEDREQUEST._serialized_start=1635
+  _ELIMINATEDREQUEST._serialized_end=1715
+  _ELIMINATEDRESPONSE._serialized_start=1717
+  _ELIMINATEDRESPONSE._serialized_end=1767
+  _OFFICERSTATEMENTREQUEST._serialized_start=1769
+  _OFFICERSTATEMENTREQUEST._serialized_end=1834
+  _OFFICERSTATEMENTRESPONSE._serialized_start=1836
+  _OFFICERSTATEMENTRESPONSE._serialized_end=1892
+  _MYMAFIAEVENTS._serialized_start=1895
+  _MYMAFIAEVENTS._serialized_end=2767
 # @@protoc_insertion_point(module_scope)

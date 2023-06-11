@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Профиль пользователя</title>
+</head>
+<body>
+<h1>Профиль пользователя</h1>
+<p>Имя пользователя: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Пол: {{ user.gender }}</p>
+<p>Аватар:</p>
+<img src="{{ user.path }}" alt="Аватар пользователя"><br>
+<a href="/user/{{ user.username }}/edit">Изменить</a>
+</body>
+</html>

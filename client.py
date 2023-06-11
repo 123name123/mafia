@@ -40,6 +40,16 @@ class Client:
 
     async def start_game(self):
         self.username = input("Please enter username: ")
+
+        response = await self.stub.AddUser(
+            pb2.AddUserRequest(username=self.username)
+        )
+
+        if not response.status:
+            print(f"{response.text}")
+            await self.channel.close()
+            exit(0)
+
         while True:
             game_start, _ = pick([CREATE_ROOM, JOIN_ROOM], 'Select way you want to start playing:', indicator='->',
                                  default_index=0)

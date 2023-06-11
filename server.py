@@ -1,6 +1,7 @@
 import grpc
 import proto.struct_pb2 as pb2
 import proto.struct_pb2_grpc as pb2_grpc
+from concurrent import futures
 
 import asyncio
 from random import shuffle, choice
@@ -17,10 +18,9 @@ END_GAME = 1
 
 
 class GameObject:
-    def __init__(self, username, game_name, room_size):
+    def __init__(self, game_name, room_size):
         self.session_name = game_name
         self.size = room_size
-        self.username = username
         self.sync_point = asyncio.Condition()
         self.joined = 0
         self.message_queue = list()
@@ -39,13 +39,14 @@ class GameObject:
 class GameServer(pb2_grpc.MyMafiaEventsServicer):
     def __init__(self):
         self.sessions = dict()
+        self.users = dict()
 
     async def CreateRoom(self, request, context):
         if request.session_name in self.sessions:
             return pb2.CreateRoomResponse(status=False, info="Room with this name already exists\n")
         if request.game_size < 4:
             return pb2.CreateRoomResponse(status=False, info="Room size must be at least 4 users\n")
-        self.sessions[request.session_name] = GameObject(request.username, request.session_name, request.game_size)
+        self.sessions[request.session_name] = GameObject(request.session_name, request.game_size)
         self.sessions[request.session_name].message_queue.append(
             pb2.GameEventsResponse(format=INFO, text=f"You successfully joined to {request.session_name}"))
         return pb2.CreateRoomResponse(status=True, info="Room was successfully created\n")
@@ -177,9 +178,37 @@ class GameServer(pb2_grpc.MyMafiaEventsServicer):
             yield queue[number]
             number += 1
 
+    async def GetUsersInfo(self, request, context):
+        user_list = dict()
+        pos = 0
+        for name, items in self.users.items():
+            user_list[pos] = name
+            pos += 1
+        return pb2.GetUsersInfoResponse(user_list=user_list)
+
+    async def GetUserInfo(self, request, context):
+        if request.username not in self.users:
+            return pb2.GetUserInfoResponse(status=0, user_info={})
+        return pb2.GetUserInfoResponse(status=1, user_info=self.users[request.username])
+
+    async def AddUser(self, request, context):
+        if request.username in self.users:
+            return pb2.AddUserResponse(status=0, text="This username has already taken!")
+        self.users[request.username] = {"path": "empty", "email": "empty", "gender": "empty"}
+        return pb2.AddUserResponse(status=1, text="")
+
+    async def EditUser(self, request, context):
+        if request.username not in self.users:
+            return pb2.EditUserResponse(status=0, text="There is no such user!")
+
+        self.users[request.username] = {"path": request.image_path,
+                                        "email": request.email,
+                                        "gender": request.gender}
+        return pb2.EditUserResponse(status=1, text="")
+
 
 async def start_server():
-    server = grpc.aio.server()
+    server = grpc.aio.server(futures.ThreadPoolExecutor(max_workers=10))
     pb2_grpc.add_MyMafiaEventsServicer_to_server(GameServer(), server)
     server.add_insecure_port("0.0.0.0:8080")
     await server.start()
