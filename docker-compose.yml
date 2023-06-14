@@ -1,6 +1,6 @@
 version: "3"
 services:
   server:
-    image: eliseymuxin/mafia
+    image: eliseymuxin/mafia_test
     ports:
-      - "8080:8080/tcp"
+      - "2000:2000/tcp"

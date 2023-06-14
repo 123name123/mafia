@@ -18,3 +18,25 @@ docker-compose up
 ```
 pip install -r requirements.txt && python3 client.py
 ```
+
+# Rest api
+
+В файлах rest_api.py, stats.py, worker.py, реализованы требования 4ое дз
+с помощью redis строется очередь запросов
+
+Запросить генерацию пдф:
+```
+post - /stats {player_name: username} -> 202 job_id
+```
+
+Получить ссылку на файл
+```
+get - /start/job_id -> 202 still generating or 200 url to file
+```
+
+```
+/ - список пользователей
+/user/<username> - профиль пользователя
+/user/<username>/edit - редактировать профиль
+```
+

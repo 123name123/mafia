@@ -11,6 +11,8 @@ from rq.job import Job
 from redis import Redis
 from rq.registry import StartedJobRegistry
 import pdfkit
+from stats import generate_statistics
+from worker import conn
 
 app = Flask(__name__)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -19,8 +21,29 @@ api = Api(app)
 redis_conn = Redis()
 queue = Queue(connection=redis_conn)
 
-channel = grpc.insecure_channel("0.0.0.0:8080")
+channel = grpc.insecure_channel("0.0.0.0:2000")
 stub = pb2_grpc.MyMafiaEventsStub(channel)
+
+q = Queue(connection=conn)
+
+
+@app.route('/stats', methods=['POST'])
+def process_stats_request():
+    player_name = request.json['player_name']
+    job = q.enqueue(generate_statistics, player_name)
+    return jsonify({'job_id': job.id}), 202
+
+
+@app.route('/stats/<job_id>', methods=['GET'])
+def get_stats_result(job_id):
+    job = Job.fetch(job_id, connection=conn)
+    if job.is_finished:
+        result = job.result
+        return jsonify(result), 200
+    elif job.is_failed:
+        return jsonify({'error': 'Failed to generate statistics.'}), 500
+    else:
+        return jsonify({'status': 'in progress'}), 202
 
 
 @app.route("/")

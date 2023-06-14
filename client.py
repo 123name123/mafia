@@ -277,7 +277,7 @@ async def mafia_game(client):
 
 async def my_mafia_game():
     try:
-        channel = grpc.aio.insecure_channel("0.0.0.0:8080")
+        channel = grpc.aio.insecure_channel("0.0.0.0:2000")
         stub = pb2_grpc.MyMafiaEventsStub(channel)
         client = Client(stub, channel)
         await client.start_game()
