@@ -4,7 +4,7 @@ import grpc
 import proto.struct_pb2 as pb2
 import proto.struct_pb2_grpc as pb2_grpc
 
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, send_file
 from flask_restful import Resource, Api
 from rq import Queue
 from rq.job import Job
@@ -25,6 +25,11 @@ channel = grpc.insecure_channel("0.0.0.0:2000")
 stub = pb2_grpc.MyMafiaEventsStub(channel)
 
 q = Queue(connection=conn)
+
+
+@app.route('/open_pdf/<path>')
+def open_pdf(path):
+    return send_file(path, mimetype='application/pdf')
 
 
 @app.route('/stats', methods=['POST'])
