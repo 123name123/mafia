@@ -4,7 +4,7 @@ import grpc
 import proto.struct_pb2 as pb2
 import proto.struct_pb2_grpc as pb2_grpc
 
-from flask import Flask, render_template, request, redirect, jsonify, send_file
+from flask import Flask, render_template, request, redirect, jsonify, send_file, send_from_directory
 from flask_restful import Resource, Api
 from rq import Queue
 from rq.job import Job
@@ -16,26 +16,30 @@ from worker import conn
 
 app = Flask(__name__)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['UPLOAD_FOLDER'] = 'static'
 api = Api(app)
 redis_conn = Redis()
 queue = Queue(connection=redis_conn)
 
-channel = grpc.insecure_channel("0.0.0.0:2000")
+channel = grpc.insecure_channel("server:2000")
 stub = pb2_grpc.MyMafiaEventsStub(channel)
 
 q = Queue(connection=conn)
 
 
-@app.route('/open_pdf/<path>')
-def open_pdf(path):
-    return send_file(path, mimetype='application/pdf')
+@app.route('/open_pdf/<pdf_file>', methods=['GET'])
+def open_pdf(pdf_file):
+    pdf_path = os.path.join(app.root_path, 'static', pdf_file)
+    if not os.path.isfile(pdf_path):
+        return 'Invalid PDF'
+
+    return send_file(pdf_path, download_name='file.pdf')
 
 
 @app.route('/stats', methods=['POST'])
 def process_stats_request():
     player_name = request.json['player_name']
-    job = q.enqueue(generate_statistics, player_name)
+    job = q.enqueue(generate_statistics, [player_name, 0, 0, 0, 0])
     return jsonify({'job_id': job.id}), 202
 
 
@@ -110,4 +114,4 @@ def edit_user(username):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port="3001")

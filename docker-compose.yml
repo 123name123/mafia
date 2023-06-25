@@ -1,6 +1,53 @@
 version: "3"
+
+networks:
+  network:
+    driver: bridge
+
 services:
-  server:
-    image: eliseymuxin/mafia_test
+  redis:
+    image: redis
+
     ports:
-      - "2000:2000/tcp"
+      - 6379:6379
+
+    networks:
+      - network
+
+  server:
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile
+
+    ports:
+      - 2000:2000
+
+    networks:
+      - network
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker/Dockerfile
+
+    networks:
+      - network
+
+    depends_on:
+      - redis
+
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+
+    ports:
+      - 3001:3001
+
+    networks:
+      - network
+
+    depends_on:
+      - worker
+      - server
